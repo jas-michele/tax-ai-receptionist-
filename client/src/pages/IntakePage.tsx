@@ -1,4 +1,6 @@
 import { use, useState } from "react";
+import { getEstimate } from "../services/estimateService";
+import { formatCurrency } from "../utils/formatCurrency";
 
 
 export default function IntakePage() {
@@ -13,23 +15,11 @@ export default function IntakePage() {
         e.preventDefault();
 
         try {
-            const response = await fetch(
-                "http://localhost:5000/estimate",
-                {
-                    method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-
-                    body: JSON.stringify({
-                        income,
-                        dependents
-                    }),
-                }
-            );
-
-            const data = await response.json();
+            const data = await getEstimate({
+                income,
+                dependents
+            });
 
             console.log(data);
 
@@ -80,7 +70,7 @@ export default function IntakePage() {
             {refund !== null && (
 
                 <h2>
-                    Estimated Refund: ${refund.toLocaleString()}
+                    Estimated Refund: ${formatCurrency(refund)}
                 </h2>
             )}
 

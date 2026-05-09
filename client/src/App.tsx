@@ -1,4 +1,4 @@
-import IntakePage from "./pages/IntakePage";
+import IntakePage from "./pages/IntakePage"
 import './App.css'
 
 function App() {
