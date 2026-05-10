@@ -1,3 +1,4 @@
+import chatRoutes from "./routes/chatRoutes"
 import express from "express";
 import cors from "cors"; 
 import estimateRoutes from "./routes/estimateRoutes";
@@ -10,6 +11,8 @@ app.use(express.json());
 
 app.use("/estimate", estimateRoutes);
 app.use("/intake", intakeRoutes)
+
+app.use("/chat", chatRoutes);
 
 
 app.get("/", (_req, res) => {

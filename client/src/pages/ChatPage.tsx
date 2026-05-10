@@ -6,18 +6,49 @@ export default function ChatPage() {
 
     const [messages, setMessages] = useState<string[]>([]);
 
-    function handleSendMessage() {
+    async function handleSendMessage() {
 
         if (!message.trim()) return;
 
+        const userMessage = message;
+
         setMessages([
             ...messages,
-            message,
+            `You: ${userMessage}`,
         ]);
 
         setMessage("");
-    }
 
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                    },
+
+                    body: JSON.stringify({
+                        message: userMessage,
+                    }),
+                }
+            );
+
+            const data = await response.json();
+
+            setMessages((prev) => [
+                ...prev,
+                `AI: ${data.reply}`,
+            ]);
+
+        } catch (error) {
+
+            console.error(error);
+        }
+    }
 
     return (
 
