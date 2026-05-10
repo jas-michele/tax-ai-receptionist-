@@ -136,7 +136,7 @@ export default function IntakePage() {
                         type="email"
                         value={email}
                         onChange={(e) => 
-                            setPhone(e.target.value)
+                            setEmail(e.target.value)
                         }
                     />    
                 </div>

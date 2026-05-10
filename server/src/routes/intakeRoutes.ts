@@ -1,8 +1,10 @@
 import express from "express";
-import { submitIntake } from "../controllers/intakeController";
+import { createIntake, getIntakes } from "../controllers/intakeController";
 
 const router = express.Router();
 
-router.post("/", submitIntake);
+router.post("/", createIntake);
+
+router.get("/", getIntakes)
 
 export default router;
