@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { getEstimate } from "../services/estimateService";
 import { formatCurrency } from "../utils/formatCurrency";
 import { submitIntake } from "../services/intakeService";
@@ -17,6 +17,7 @@ export default function IntakePage() {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState("");
 
     const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -26,6 +27,29 @@ export default function IntakePage() {
         setSuccessMessage("");
         setErrorMessage("");
 
+        if(
+            !firstName ||
+            !lastName ||
+            !phone ||
+            !email ||
+            !income
+        ) {
+            setErrorMessage("Pleasse fill out all required fields");
+            return;
+        }
+
+        if (!email.includes("@")) {
+            setErrorMessage("Please enter valid email");
+            return;
+        }
+
+        if (Number(income) < 0) {
+            setErrorMessage("Income cannot be negative");
+        }
+        if (Number(dependents) < 0) {
+            setErrorMessage("Dependents cannot be negative");
+        }
+
         setLoading(true);
 
         try {
@@ -34,6 +58,7 @@ export default function IntakePage() {
                 firstName,
                 lastName,
                 phone,
+                email,
                 income,
                 dependents
             });
@@ -103,6 +128,20 @@ export default function IntakePage() {
                         }
                     />    
                 </div>
+
+                <div>
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => 
+                            setPhone(e.target.value)
+                        }
+                    />    
+                </div>
+               
+               
 
                 <div>
                     <label>Income</label>

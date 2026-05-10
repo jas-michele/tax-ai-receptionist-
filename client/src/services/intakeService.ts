@@ -3,6 +3,7 @@ type IntakeData = {
     firstName: string;
     lastName: string;
     phone: string;
+    email: string;
     income: string;
     dependents: string;
 };
@@ -11,7 +12,7 @@ export async function submitIntake(
     intakeData: IntakeData
 ) {
     const response = await fetch(
-        "http://localhost:3000/intake",
+        "http://localhost:5000/intake",
       {
         method: "POST",
 
