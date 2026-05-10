@@ -1,6 +1,7 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { getEstimate } from "../services/estimateService";
 import { formatCurrency } from "../utils/formatCurrency";
+import { submitIntake } from "../services/intakeService";
 
 
 export default function IntakePage() {
@@ -9,24 +10,49 @@ export default function IntakePage() {
     const [dependents, setDependents] = useState("");
     const [refund, setRefund] = useState<number | null>(null);
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
+
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
     const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
 
+        setSuccessMessage("");
+        setErrorMessage("");
+
         try {
 
-            const data = await getEstimate({
+             await submitIntake({
+                firstName,
+                lastName,
+                phone,
                 income,
                 dependents
             });
 
-            console.log(data);
+            const estimateData = await getEstimate({
+                income,
+                dependents
+            })
 
-            setRefund(data.estimatedRefund)
+            setRefund(estimateData.estimatedRefund)
+
+            setSuccessMessage(
+                "Intake form submitted successfully"
+            )
 
         } catch (error) {
             console.error(error);
+
+            setErrorMessage(
+                "Something went wrong submitting the form"
+            )
+
         }
     };
 
@@ -36,6 +62,42 @@ export default function IntakePage() {
             <h1>Tax Intake Form</h1>
 
             <form onSubmit={handleSubmit}>
+
+                <div>
+                    <label>First Name</label>
+
+                    <input 
+                        type="text"
+                        value={firstName}
+                        onChange={(e) =>
+                            setFirstName(e.target.value)
+                        }
+                    />
+                </div>
+
+                <div>
+                    <label>Last Name</label>
+
+                    <input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => 
+                            setLastName(e.target.value)
+                        }
+                    />    
+                </div>
+
+                <div>
+                    <label>Phone</label>
+
+                    <input
+                        type="text"
+                        value={phone}
+                        onChange={(e) => 
+                            setPhone(e.target.value)
+                        }
+                    />    
+                </div>
 
                 <div>
                     <label>Income</label>
@@ -62,10 +124,18 @@ export default function IntakePage() {
                 </div>
 
                 <button type="submit">
-                    Estimate Refund
+                    Submit Intake Form
                 </button>
 
             </form>
+
+            {successMessage && (
+                <p>{successMessage}</p>
+            )}
+
+            {errorMessage && (
+                <p>{errorMessage}</p>
+            )}
 
             {refund !== null && (
 
