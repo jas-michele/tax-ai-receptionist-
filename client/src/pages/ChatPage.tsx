@@ -47,6 +47,8 @@ export default function ChatPage() {
 
             const data = await response.json();
 
+            console.log(data);
+
             setMessages((prev) => [
                 ...prev,
                 {
