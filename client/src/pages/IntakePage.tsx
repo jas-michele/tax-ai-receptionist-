@@ -16,6 +16,7 @@ export default function IntakePage() {
 
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -24,6 +25,8 @@ export default function IntakePage() {
 
         setSuccessMessage("");
         setErrorMessage("");
+
+        setLoading(true);
 
         try {
 
@@ -53,6 +56,8 @@ export default function IntakePage() {
                 "Something went wrong submitting the form"
             )
 
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -123,8 +128,8 @@ export default function IntakePage() {
                     />
                 </div>
 
-                <button type="submit">
-                    Submit Intake Form
+                <button type="submit" disabled={loading}>
+                    {loading ? "Submitting..." : "Submit Intake Form"}
                 </button>
 
             </form>
