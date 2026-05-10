@@ -38,9 +38,9 @@ export default function DashboardPage() {
 
     return (
 
-        <div>
+        <div className="dashboard-container">
 
-            <h1>Client Dashboard</h1>
+            <h1 className="dashboard-grid">Client Dashboard</h1>
 
             {intakes.map((intake) => (
 
