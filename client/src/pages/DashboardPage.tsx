@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 type Inatke = {
     id: number;
+    status: string,
+
     firstName: string;
     lastName: string;
     phone: string;
@@ -58,6 +60,10 @@ export default function DashboardPage() {
                         {" "}
                         {intake.lastName}
                     </h3>
+
+                    <p className="status-badg">
+                        {intake.status}
+                    </p>
 
                     <p>
                         Phone:

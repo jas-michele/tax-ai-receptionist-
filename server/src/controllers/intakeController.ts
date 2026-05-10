@@ -8,6 +8,7 @@ export function createIntake(
 ) {
     const newdIntake = {
         id: Date.now(),
+        status: "New Lead",
         ...req.body,
     }
 
@@ -15,7 +16,7 @@ export function createIntake(
 
     res.status(201).json({
         message: "Intake submitted",
-        data: newdIntake,
+        data: newdIntake
     });
 }
 

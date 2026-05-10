@@ -43,3 +43,21 @@
   margin: 8px 0;
   color: #334155;
 }
+
+.status-badge {
+  display: inline-block;
+
+  background-color: #dbeafe;
+
+  color: #1d4ed8;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+
+  margin-bottom: 15px;
+}
