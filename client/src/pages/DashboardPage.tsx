@@ -37,6 +37,26 @@ export default function DashboardPage() {
         fetchIntake();
     }, []);
 
+    function updateStatus(
+        id: number,
+        newStatus: string
+    ) {
+        const updatedIntakes = intakes.map((intake) => {
+
+            if (intake.id === id) {
+
+                return {
+                    ...intake,
+                    status: newStatus,
+                };
+            }
+
+            return intake;
+        })
+
+        setIntakes(updatedIntakes)
+    }
+
 
     return (
 
@@ -61,7 +81,7 @@ export default function DashboardPage() {
                         {intake.lastName}
                     </h3>
 
-                    <p className="status-badg">
+                    <p className="status-badge">
                         {intake.status}
                     </p>
 
@@ -89,8 +109,46 @@ export default function DashboardPage() {
                         {intake.dependents}
                     </p>
 
+                    <div className="button-group">
+
+                        <button 
+                            onClick={() =>
+                                updateStatus(
+                                    intake.id,
+                                    "called"
+                                )
+                            }
+                            >
+                                Mark Called
+                            </button>
+
+                            <button 
+                                onClick={() => 
+                                    updateStatus(
+                                        intake.id,
+                                        "Appointment Scheduled"
+                                    )
+                                }
+                                >
+                                    Schedule Appointment
+                                </button>
+
+                             <button
+                                onClick={() => 
+                                    updateStatus(
+                                        intake.id,
+                                        "Documents Pending"
+                                    )
+                                }  
+                             >
+                                Documents Pending
+                                </button>    
+                    </div>
+
                 </div>
+
             ))}
+
 
         </div>
     );

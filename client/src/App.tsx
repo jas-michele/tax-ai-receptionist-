@@ -1,3 +1,4 @@
+import ChatPage from "./pages/ChatPage"
 import DashboardPage from "./pages/DashboardPage"
 import IntakePage from "./pages/IntakePage"
 import './App.css'
@@ -18,6 +19,11 @@ function App() {
       <Route
         path="/dashboard"
         element={<DashboardPage />} 
+       /> 
+
+      <Route
+        path="/chat"
+        element={<ChatPage />} 
        /> 
     </Routes>
   )
