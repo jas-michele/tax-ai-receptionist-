@@ -1,10 +1,15 @@
 import { useState } from "react";
 
+type Message = {
+    role: "user" | "ai";
+    content: message
+}
+
 export default function ChatPage() {
 
     const [message, setMessage] = useState("");
 
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
     async function handleSendMessage() {
 
@@ -12,9 +17,12 @@ export default function ChatPage() {
 
         const userMessage = message;
 
-        setMessages([
-            ...messages,
-            `You: ${userMessage}`,
+        setMessages((prev) => [
+            ...prev,
+            {
+                role: "user",
+                content: userMessage,
+            }  
         ]);
 
         setMessage("");
@@ -41,7 +49,11 @@ export default function ChatPage() {
 
             setMessages((prev) => [
                 ...prev,
-                `AI: ${data.reply}`,
+                {
+                    role: "ai",
+                    content: data.reply,
+                }
+              
             ]);
 
         } catch (error) {
@@ -62,9 +74,21 @@ export default function ChatPage() {
 
                     <div
                         key={index}
-                        className="chat-message"
+                        className={
+                            msg.role === "user"
+                            ? "chat-message user"
+                            : "chat-message ai"
+                        }
                     >
-                        {msg}
+
+                        <strong>
+                            {msg.role === "user"
+                            ? "You"
+                            : "AI"}
+                        </strong>
+
+                        {" "}
+                        {msg.content}
                     </div>
                 ))}
 
