@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type Message = {
     role: "user" | "ai";
-    content: message
+    content: string
 }
 
 export default function ChatPage() {
