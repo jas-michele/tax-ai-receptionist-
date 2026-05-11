@@ -11,6 +11,8 @@ export default function ChatPage() {
 
     const [messages, setMessages] = useState<Message[]>([]);
 
+    const [islistening, setIsListening] = useState(false);
+
     async function handleSendMessage() {
 
         if (!message.trim()) return;
@@ -64,6 +66,53 @@ export default function ChatPage() {
         }
     }
 
+    function startListening() {
+
+        const SpeechRecognition = 
+          (window as any).SpeechRecognition ||
+          (window as any).webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            alert(
+                 "Speech recognition not supported"
+                );
+
+                return;
+        }  
+
+        const recognition = 
+            new SpeechRecognition();
+
+            recognition.lang = "en-US";
+
+            recognition.start();
+
+            setIsListening(true);
+
+            recognition.onresult = (event: any) => {
+
+                const transcript = 
+                    event.results[0][0].transcript;
+
+                    setMessage(transcript);
+
+                    setIsListening(false);
+            };
+
+            recognition.onerror = () => {
+
+                setIsListening(false);
+            };
+
+            recognition.onend = () => {
+
+                setIsListening(false)
+            };
+
+    }
+
+
+
     return (
 
         <div className="chat-container">
@@ -113,6 +162,14 @@ export default function ChatPage() {
                 >
                     Send
                 </button>
+
+                <button
+                    onClick={startListening}
+                >
+                    {islistening
+                        ? "Listening..."
+                        : " 🎤 Speak"}
+                    </button>    
 
             </div>
 
