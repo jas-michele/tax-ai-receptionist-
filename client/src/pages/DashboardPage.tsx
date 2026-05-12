@@ -17,6 +17,11 @@ export default function DashboardPage() {
     const [intakes, setIntakes] = useState<Intake[]>([]);
     const [conversations, setConversations] = useState<any[]>([]);
 
+    const [
+        selectedConverstaion,
+        setselectedConverstaion] = useState<any | null>(null);
+    
+
     useEffect(() => {
         async function fetchIntake() {
             try {
@@ -58,6 +63,7 @@ export default function DashboardPage() {
         }
 
         fetchConversations();
+
     }, []);
 
     function updateStatus(
@@ -188,9 +194,62 @@ export default function DashboardPage() {
                         "No summary available yet"}
                     </p>
 
+                    <button
+                        onClick={() => 
+                            setselectedConverstaion(
+                                conversation
+                            )
+                        }
+                    >
+                        
+                        View Conversation
+                    </button>    
+
                 </div>
 
             ))}
+
+            {selectedConverstaion && (
+
+                <div
+                    style={{
+                        border: "2px solid black",
+                        padding: "20px",
+                        marginTop: "20px",
+                    }}
+                >
+
+                    <h2>
+                        Conversation Transcript
+                    </h2>
+
+                    {selectedConverstaion.messages.map(
+                        (
+                            msg: any,
+                            index: number
+                        ) => (
+                            <div
+                                key={index}
+                                style={{
+                                    marginBottom: "10px",
+                                }}
+                            >
+                                <strong>
+                                    {
+                                        msg.role === "user"
+                                            ? "User"
+                                            :"AI"
+                                    }
+                                </strong>
+
+                                <p>
+                                    {msg.content}
+                                </p>
+                            </div>    
+                        )
+                    )}
+                </div>    
+            )}
 
 
         </div>
