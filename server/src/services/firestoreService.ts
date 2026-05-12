@@ -11,7 +11,8 @@ interface Message {
 
 export async function saveConversation(
     sessionId: string,
-    messages: Message[]
+    messages: Message[],
+    summary: string
 ) {
     await db
         .collection("conversations")
@@ -19,6 +20,7 @@ export async function saveConversation(
         .set({
             sessionId,
             messages,
+            summary,
             updatedAt: new Date(),
         });
 }

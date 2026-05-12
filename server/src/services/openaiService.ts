@@ -128,5 +128,5 @@ export async function generateLeadSummary(
         });
 
         return completion.choices[0]
-            .message.content;
+            .message.content || "";
 }

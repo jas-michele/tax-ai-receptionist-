@@ -182,8 +182,10 @@ export default function DashboardPage() {
                     </h3>
 
                     <p>
-                        Messages:
-                        {conversation.messages.length}
+                        Lead Summary:
+                        {""}
+                        {conversation.summary ||
+                        "No summary available yet"}
                     </p>
 
                 </div>
