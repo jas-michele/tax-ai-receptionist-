@@ -1,6 +1,6 @@
 import express from "express";
 import { getAIResponse } from "../services/openaiService";
-
+import { saveConversation } from "../services/firestoreService";
 
 const router = express.Router();
 
@@ -8,14 +8,27 @@ router.post("/", async (req, res) => {
    
     try {
 
-        const { message } = req.body;
+        const { sessionId, messages } = req.body;
 
         const aiReply = 
-            await getAIResponse(message);
+            await getAIResponse(messages);
 
-            res.status(200).json({
-                reply: aiReply
-            })
+        const updatedMessages = [
+            ...messages,
+            {
+                role: "assistant",
+                content: aiReply
+            },
+        ];
+
+        await saveConversation(
+            sessionId,
+            updatedMessages
+        );
+
+        res.json({
+            aiReply,
+        })
 
     } catch (error: any) {
 

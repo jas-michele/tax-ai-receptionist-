@@ -1,9 +1,6 @@
 import { useState } from "react";
+import type { Message } from "../types/chat.ts"
 
-type Message = {
-    role: "user" | "ai";
-    content: string
-}
 
 export default function ChatPage() {
 
@@ -11,21 +8,25 @@ export default function ChatPage() {
 
     const [messages, setMessages] = useState<Message[]>([]);
 
+    const [sessionId] = useState(() => crypto.randomUUID());
+
     const [islistening, setIsListening] = useState(false);
 
     async function handleSendMessage() {
 
         if (!message.trim()) return;
 
-        const userMessage = message;
+        const userMessage: Message = {
+            role: "user",
+            content: message
+        };
 
-        setMessages((prev) => [
-            ...prev,
-            {
-                role: "user",
-                content: userMessage,
-            }  
-        ]);
+        const updatedMessages = [
+            ...messages,
+            userMessage,
+        ]
+
+        setMessages(updatedMessages)
 
         setMessage("");
 
@@ -42,7 +43,8 @@ export default function ChatPage() {
                     },
 
                     body: JSON.stringify({
-                        message: userMessage,
+                        sessionId,
+                        messages: updatedMessages,
                     }),
                 }
             );
@@ -54,8 +56,8 @@ export default function ChatPage() {
             setMessages((prev) => [
                 ...prev,
                 {
-                    role: "ai",
-                    content: data.reply,
+                    role: "assistant",
+                    content: data.aiReply,
                 }
               
             ]);
@@ -91,8 +93,13 @@ export default function ChatPage() {
 
             recognition.onresult = (event: any) => {
 
-                const transcript = 
+                let transcript = 
                     event.results[0][0].transcript;
+
+                    transcript = transcript
+                        .replace(/\sat\s/g, "@")
+                        .replace(/\sdot\s/g, ".")
+
 
                     setMessage(transcript);
 
@@ -110,7 +117,6 @@ export default function ChatPage() {
             };
 
     }
-
 
 
     return (

@@ -1,11 +1,16 @@
 import OpenAI from "openai";
 
+interface Message {
+    role: "user" | "assistant";
+    content: string
+}
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function getAIResponse(
-    message: string
+    messages: Message[]
 ) {
     const completion =
         await openai.chat.completions.create({
@@ -86,10 +91,7 @@ export async function getAIResponse(
                         `
                 },
 
-                {
-                    role: "user",
-                    content: message
-                },
+                ...messages,
             ],
         });
 
