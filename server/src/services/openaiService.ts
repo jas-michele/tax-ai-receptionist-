@@ -5,9 +5,17 @@ interface Message {
     content: string
 }
 
+type LeadData = {
+    fullName: string | null;
+    email: string | null;
+    taxType: string | null;
+
+}
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
+
 
 export async function getAIResponse(
     messages: Message[]
@@ -130,3 +138,62 @@ export async function generateLeadSummary(
         return completion.choices[0]
             .message.content || "";
 }
+
+export const extractLeadData = async (messages: any[]) => {
+    try {
+
+        const extractionPrompt = `
+        You are a data extarction system.
+
+        Your job is to extract structured lead information
+        from a tax office conversation.
+
+        Extract:
+
+        - fullName
+        - email
+        - taxType
+
+        Rules:
+        - Return ONLY valid JSON
+        - Do not explain anything
+        - Do not include markdown
+        - Donot inclue extra text
+        - If missing, use null
+
+        Example:
+
+        {
+            "fullName": "Jasmine Oliver,
+            "email": "jasmine@gmail.com",
+            "taxType": "Personal"
+        }
+        `;
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4.1-mini",
+            messages: [
+                {
+                    role: "system",
+                    content: extractionPrompt,
+                },
+
+                ...messages
+            ],
+        });
+
+        const content = 
+            completion.choices[0].message.content || "{}";
+
+         console.log("RAW EXTRACTION:", content);   
+        return JSON.parse(content);    
+    } catch (error) {
+        console.error("Lead extraction error:", error)
+
+        return {
+            fullName: null,
+            email: null,
+            taxType: null
+        };
+    }
+};

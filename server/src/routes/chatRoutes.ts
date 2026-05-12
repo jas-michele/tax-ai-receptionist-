@@ -1,5 +1,5 @@
 import express from "express";
-import { getAIResponse, generateLeadSummary } from "../services/openaiService";
+import { getAIResponse, generateLeadSummary , extractLeadData} from "../services/openaiService";
 import { saveConversation } from "../services/firestoreService";
 import { devNull } from "node:os";
 import { db } from "../config/firebase";
@@ -29,13 +29,18 @@ router.post("/", async (req, res) => {
             await generateLeadSummary(
                 updatedMessages
             );
-
+        
+        const leadData = await extractLeadData(messages);
+        
+        
+        console.log("Lead Data:", leadData)    
         console.log("Saving conversations...")
 
         await saveConversation(
             sessionId,
             updatedMessages,
-            summary
+            summary,
+            leadData
         );
 
         res.json({
