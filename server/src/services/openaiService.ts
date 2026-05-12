@@ -98,3 +98,35 @@ export async function getAIResponse(
     return completion.choices[0]
         .message.content;
 }
+
+export async function generateLeadSummary(
+    messages: Message[]
+) {
+    const completion =
+        await openai.chat.completions.create({
+
+            model: "gpt-4.1-mini",
+
+            messages: [
+
+                {
+                    role: "system",
+                    content:`
+                        Summarize this tax client lead 
+                        in 1-2 short proffesional sentences.
+
+                        Include:
+                        - tax type
+                        - appointment interest
+                        - major needs
+                        -important details
+                        `,
+                },
+
+                ...messages,
+            ],
+        });
+
+        return completion.choices[0]
+            .message.content;
+}
