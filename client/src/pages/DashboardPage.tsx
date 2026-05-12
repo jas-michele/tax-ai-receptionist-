@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type Inatke = {
+type Intake = {
     id: number;
     status: string,
 
@@ -14,7 +14,8 @@ type Inatke = {
 
 export default function DashboardPage() {
 
-    const [intakes, setIntakes] = useState<Inatke[]>([]);
+    const [intakes, setIntakes] = useState<Intake[]>([]);
+    const [conversations, setConversations] = useState<any[]>([]);
 
     useEffect(() => {
         async function fetchIntake() {
@@ -35,6 +36,28 @@ export default function DashboardPage() {
         }
 
         fetchIntake();
+    }, []);
+
+    useEffect(() => {
+
+        async function fetchConversations() {
+
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/chat/conversations"
+                );
+
+                const data = await response.json();
+
+                console.log(data);
+
+                setConversations(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchConversations();
     }, []);
 
     function updateStatus(
@@ -111,39 +134,57 @@ export default function DashboardPage() {
 
                     <div className="button-group">
 
-                        <button 
+                        <button
                             onClick={() =>
                                 updateStatus(
                                     intake.id,
                                     "called"
                                 )
                             }
-                            >
-                                Mark Called
-                            </button>
+                        >
+                            Mark Called
+                        </button>
 
-                            <button 
-                                onClick={() => 
-                                    updateStatus(
-                                        intake.id,
-                                        "Appointment Scheduled"
-                                    )
-                                }
-                                >
-                                    Schedule Appointment
-                                </button>
+                        <button
+                            onClick={() =>
+                                updateStatus(
+                                    intake.id,
+                                    "Appointment Scheduled"
+                                )
+                            }
+                        >
+                            Schedule Appointment
+                        </button>
 
-                             <button
-                                onClick={() => 
-                                    updateStatus(
-                                        intake.id,
-                                        "Documents Pending"
-                                    )
-                                }  
-                             >
-                                Documents Pending
-                                </button>    
+                        <button
+                            onClick={() =>
+                                updateStatus(
+                                    intake.id,
+                                    "Documents Pending"
+                                )
+                            }
+                        >
+                            Documents Pending
+                        </button>
                     </div>
+
+                </div>
+
+            ))}
+
+            {conversations.map((conversation, index) => (
+
+                <div key={index}>
+
+                    <h3>
+                        Session:
+                        {conversation.sessionId}
+                    </h3>
+
+                    <p>
+                        Messages:
+                        {conversation.messages.length}
+                    </p>
 
                 </div>
 
