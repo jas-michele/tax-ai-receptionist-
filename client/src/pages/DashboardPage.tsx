@@ -20,7 +20,7 @@ export default function DashboardPage() {
     const [
         selectedConverstaion,
         setselectedConverstaion] = useState<any | null>(null);
-    
+
 
     useEffect(() => {
         async function fetchIntake() {
@@ -191,19 +191,37 @@ export default function DashboardPage() {
                         Lead Summary:
                         {""}
                         {conversation.summary ||
-                        "No summary available yet"}
+                            "No summary available yet"}
+                    </p>
+
+                    <p>
+                        Name:
+                        {" "}
+                        {conversation.leadData?.fullName || "N/A"}
+                    </p>
+
+                    <p>
+                        Email:
+                        {" "}
+                        {conversation.leadData?.email || "N/A"}
+                    </p>
+
+                    <p>
+                        Tax Type:
+                        {" "}
+                        {conversation.leadData?.taxType || "N/A"}
                     </p>
 
                     <button
-                        onClick={() => 
+                        onClick={() =>
                             setselectedConverstaion(
                                 conversation
                             )
                         }
                     >
-                        
+
                         View Conversation
-                    </button>    
+                    </button>
 
                 </div>
 
@@ -238,17 +256,17 @@ export default function DashboardPage() {
                                     {
                                         msg.role === "user"
                                             ? "User"
-                                            :"AI"
+                                            : "AI"
                                     }
                                 </strong>
 
                                 <p>
                                     {msg.content}
                                 </p>
-                            </div>    
+                            </div>
                         )
                     )}
-                </div>    
+                </div>
             )}
 
 
