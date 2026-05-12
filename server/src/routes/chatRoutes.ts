@@ -58,6 +58,7 @@ router.get("/conversations", async (req, res) => {
     try {
         const snapshot = await db
             .collection("conversations")
+            .orderBy("updatedAt", "desc")
             .get();
 
         const conversations = snapshot.docs.map((doc) => ({
