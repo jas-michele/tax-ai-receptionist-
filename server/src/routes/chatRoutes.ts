@@ -1,8 +1,12 @@
 import express from "express";
 import { getAIResponse } from "../services/openaiService";
 import { saveConversation } from "../services/firestoreService";
+import { devNull } from "node:os";
+import { db } from "../config/firebase";
 
 const router = express.Router();
+
+console.log("POST HIT");
 
 router.post("/", async (req, res) => {
    
@@ -20,6 +24,8 @@ router.post("/", async (req, res) => {
                 content: aiReply
             },
         ];
+
+        console.log("Saving conversations...")
 
         await saveConversation(
             sessionId,
@@ -41,5 +47,26 @@ router.post("/", async (req, res) => {
     }
 })
 
+router.get("/conversations", async (req, res) => {
+    
+    try {
+        const snapshot = await db
+            .collection("conversations")
+            .get();
+
+        const conversations = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        
+        res.json(conversations);
+    } catch (error: any) {
+        console.error(error);
+
+        res.status(500).json({
+            error: error.message,
+        });
+    }
+});
 
 export default router;
