@@ -33,6 +33,8 @@
     0 6px 18px rgba(0,0,0,0.15);
 
   transition: transform 0.2s ease;
+
+  animation: fadeInUp 0.3s ease;
 }
 
 .dashboard-card:hover {
@@ -143,6 +145,8 @@
   line-height: 1.5;
 
   word-wrap: break-word;
+
+  animation: fadeInUp 0.25s ease;
 }
 
 .chat-message.user {
@@ -359,4 +363,159 @@
   align-items: center;
 
   margin-bottom: 20px;
+}
+
+.chat-input-container button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+
+  .dashboard-container {
+    padding: 20px;
+  }
+
+  .chat-container {
+    padding: 20px;
+  }
+
+  .chat-box {
+    height: 60vh;
+  }
+
+  .chat-input-container {
+    flex-direction: column;
+  }
+
+  .chat-input-container button {
+    width: 100%;
+  }
+
+  .transcript-modal {
+    max-height: 90vh;
+    padding: 16px;
+  }
+}
+
+.message-time {
+  font-size: 0.7rem;
+
+  opacity: 0.7;
+
+  margin-top: 6px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+.intake-container {
+  min-height: 100vh;
+
+  background-color: #0f172a;
+
+  padding: 40px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.intake-container h1 {
+  color: white;
+
+  margin-bottom: 24px;
+}
+
+.intake-card {
+  width: 100%;
+
+  max-width: 600px;
+
+  background: #e2e8f0;
+
+  padding: 32px;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.25);
+}
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.form-group input {
+  padding: 14px 16px;
+
+  border-radius: 10px;
+
+  border: 1px solid #d1d5db;
+
+  font-size: 1rem;
+
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+}
+
+.intake-card button {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background-color: #2563eb;
+
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.intake-card button:hover {
+  background-color: #1d4ed8;
+}
+
+.intake-card button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
 }

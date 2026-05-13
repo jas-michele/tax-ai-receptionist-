@@ -88,12 +88,14 @@ export default function IntakePage() {
 
 
     return (
-        <div>
+        <div className="intake-container">
             <h1>Tax Intake Form</h1>
 
+            <div className="intake-card">
             <form onSubmit={handleSubmit}>
 
-                <div>
+                <div className="form-group">
+                
                     <label>First Name</label>
 
                     <input 
@@ -104,8 +106,10 @@ export default function IntakePage() {
                         }
                     />
                 </div>
+            
 
-                <div>
+            <div className="form-group">
+                
                     <label>Last Name</label>
 
                     <input
@@ -116,8 +120,11 @@ export default function IntakePage() {
                         }
                     />    
                 </div>
+                
 
-                <div>
+            <div className="form-group">
+
+                
                     <label>Phone</label>
 
                     <input
@@ -129,7 +136,11 @@ export default function IntakePage() {
                     />    
                 </div>
 
-                <div>
+        
+
+                <div className="form-group">
+
+                
                     <label>Email</label>
 
                     <input
@@ -140,10 +151,12 @@ export default function IntakePage() {
                         }
                     />    
                 </div>
-               
-               
 
-                <div>
+            
+               
+             <div className="form-group">  
+
+                
                     <label>Income</label>
 
                     <input
@@ -155,7 +168,11 @@ export default function IntakePage() {
                     />
                 </div>
 
-                <div>
+                
+
+            <div className="form-group">
+
+                
                     <label>Dependents</label>
 
                     <input
@@ -167,11 +184,14 @@ export default function IntakePage() {
                     />
                 </div>
 
+                
+
                 <button type="submit" disabled={loading}>
                     {loading ? "Submitting..." : "Submit Intake Form"}
                 </button>
 
             </form>
+            </div>
 
             {successMessage && (
                 <p>{successMessage}</p>

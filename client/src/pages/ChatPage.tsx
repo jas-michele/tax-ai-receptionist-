@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import type { Message } from "../types/chat.ts"
 
 
@@ -14,6 +14,9 @@ export default function ChatPage() {
 
     const chatEndRef = useRef<HTMLDivElement | null>(null);
 
+    const [loading, setLoading] = useState(false);
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({
             behavior: "smooth"
@@ -23,11 +26,12 @@ export default function ChatPage() {
 
     async function handleSendMessage() {
 
-        if (!message.trim()) return;
+        if (!message.trim() || loading) return;
 
         const userMessage: Message = {
             role: "user",
-            content: message
+            content: message,
+            timestamp: new Date().toLocaleTimeString()
         };
 
         const updatedMessages = [
@@ -40,6 +44,8 @@ export default function ChatPage() {
         setMessage("");
 
         try {
+
+            setLoading(true);
 
             const response = await fetch(
                 "http://localhost:5000/chat",
@@ -58,6 +64,7 @@ export default function ChatPage() {
                 }
             );
 
+
             const data = await response.json();
 
             console.log(data);
@@ -68,62 +75,68 @@ export default function ChatPage() {
                     role: "assistant",
                     content: data.aiReply,
                 }
-              
+
             ]);
+
+            setLoading(false);
+
+            inputRef.current?.focus();
 
         } catch (error) {
 
             console.error(error);
+
+            setLoading(false)
         }
     }
 
     function startListening() {
 
-        const SpeechRecognition = 
-          (window as any).SpeechRecognition ||
-          (window as any).webkitSpeechRecognition;
+        const SpeechRecognition =
+            (window as any).SpeechRecognition ||
+            (window as any).webkitSpeechRecognition;
 
         if (!SpeechRecognition) {
             alert(
-                 "Speech recognition not supported"
-                );
+                "Speech recognition not supported"
+            );
 
-                return;
-        }  
+            return;
+        }
 
-        const recognition = 
+        const recognition =
             new SpeechRecognition();
 
-            recognition.lang = "en-US";
+        recognition.lang = "en-US";
 
-            recognition.start();
+        recognition.start();
 
-            setIsListening(true);
+        setIsListening(true);
 
-            recognition.onresult = (event: any) => {
+        recognition.onresult = (event: any) => {
 
-                let transcript = 
-                    event.results[0][0].transcript;
+            let transcript =
+                event.results[0][0].transcript;
 
-                    transcript = transcript
-                        .replace(/\sat\s/g, "@")
-                        .replace(/\sdot\s/g, ".")
+            transcript = transcript
+                .replace(/\sat\s/g, "@")
+                .replace(/\sdot\s/g, ".")
 
 
-                    setMessage(transcript);
+            setMessage(transcript);
 
-                    setIsListening(false);
-            };
+            setIsListening(false);
+        };
 
-            recognition.onerror = () => {
+        recognition.onerror = () => {
 
-                setIsListening(false);
-            };
+            setIsListening(false);
+        };
 
-            recognition.onend = () => {
+        recognition.onend = () => {
 
-                setIsListening(false)
-            };
+            setIsListening(false)
+        };
 
     }
 
@@ -142,20 +155,30 @@ export default function ChatPage() {
                         key={index}
                         className={
                             msg.role === "user"
-                            ? "chat-message user"
-                            : "chat-message ai"
+                                ? "chat-message user"
+                                : "chat-message ai"
                         }
                     >
                         <strong>
                             {msg.role === "user"
-                            ? "You"
-                            : "AI"}
+                                ? "You"
+                                : "AI"}
                         </strong>
 
                         {" "}
                         {msg.content}
+
+                        <p className="message-time">
+                            {msg.timestamp}
+                        </p>
                     </div>
                 ))}
+
+                {loading && (
+                    <div className="chat-message ai">
+                        AI is typing...
+                    </div>
+                )}
 
                 <div ref={chatEndRef} />
 
@@ -167,16 +190,24 @@ export default function ChatPage() {
                     type="text"
                     value={message}
                     placeholder="Ask a tax question..."
+                    ref={inputRef}
 
                     onChange={(e) =>
                         setMessage(e.target.value)
                     }
+
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            handleSendMessage();
+                        }
+                    }}
                 />
 
                 <button
                     onClick={handleSendMessage}
+                    disabled={loading}
                 >
-                    Send
+                    {loading ? "Sending..." : "Send"}
                 </button>
 
                 <button
@@ -185,7 +216,7 @@ export default function ChatPage() {
                     {islistening
                         ? "Listening..."
                         : " 🎤 Speak"}
-                    </button>    
+                </button>
 
             </div>
 
