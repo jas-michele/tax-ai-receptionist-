@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect} from "react";
 import type { Message } from "../types/chat.ts"
 
 
@@ -11,6 +11,15 @@ export default function ChatPage() {
     const [sessionId] = useState(() => crypto.randomUUID());
 
     const [islistening, setIsListening] = useState(false);
+
+    const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({
+            behavior: "smooth"
+        });
+    }, [messages])
+
 
     async function handleSendMessage() {
 
@@ -137,7 +146,6 @@ export default function ChatPage() {
                             : "chat-message ai"
                         }
                     >
-
                         <strong>
                             {msg.role === "user"
                             ? "You"
@@ -148,6 +156,8 @@ export default function ChatPage() {
                         {msg.content}
                     </div>
                 ))}
+
+                <div ref={chatEndRef} />
 
             </div>
 

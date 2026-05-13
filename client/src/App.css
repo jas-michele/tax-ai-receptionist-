@@ -1,13 +1,13 @@
 .dashboard-container {
   padding: 40px;
   min-height: 100vh;
-  background-color: #f4f7fb;
+  background-color: #0f172a;
 }
 
 .dashboard-title {
   margin-bottom: 30px;
   font-size: 2rem;
-  color: #1e293b;
+  color: white;
 }
 
 .dashboard-grid {
@@ -21,11 +21,16 @@
 
 .dashboard-card {
   background: white;
-  padding: 20px;
+  padding: 24px;
   border-radius: 12px;
 
+  color: #111827;
+
+  text-align: left;
+  line-height: 1.5;
+
   box-shadow:
-    0 4px 10px rgba(0,0,0,0.08);
+    0 6px 18px rgba(0,0,0,0.15);
 
   transition: transform 0.2s ease;
 }
@@ -36,7 +41,7 @@
 
 .dashboard-card h2 {
   margin-bottom: 15px;
-  color: #0f172a;
+  color: #111827;
 }
 
 .dashboard-card p {
@@ -99,6 +104,8 @@
 
   max-width: 800px;
 
+  min-height: 100vh;
+
   margin: 0 auto;
 }
 
@@ -156,29 +163,200 @@
 .chat-input-container {
   display: flex;
 
-  gap: 10px;
+  gap: 12px;
+
+  align-items: center;
 }
 
 .chat-input-container input {
   flex: 1;
 
-  padding: 12px;
+  padding: 14px 16px;
 
-  border-radius: 8px;
+  border-radius: 999px;
 
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
+
+  outline: none;
+
+  font-size: 1rem;
+
+  color: #334155;
+
+  background-color: white;
 }
 
 .chat-input-container button {
-  padding: 12px 20px;
+  padding: 12px 18px;
 
   border: none;
 
-  border-radius: 8px;
+  border-radius: 999px;
 
   background-color: #2563eb;
 
   color: white;
 
   cursor: pointer;
+
+  font-weight: 600;
+
+  transition: background-color 0.2s ease;
+}
+
+.chat-input-container button:hover {
+  background-color: #1d4ed8;
+}
+
+.dashboard-section-title {
+  margin-top: 40px;
+
+  margin-bottom: 20px;
+
+  font-size: 1.5rem;
+
+  color: white;
+}
+
+.primary-button {
+  background-color: #2563eb;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 10px 16px;
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.primary-button:hover {
+  background-color: #1d4ed8;
+}
+
+.transcript-modal {
+  background: white;
+
+  width: 100%;
+
+  max-width: 700px;
+
+  max-height: 80vh;
+
+  overflow-y: auto;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  position: relative;
+
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.35);
+}
+
+.transcript-message {
+  padding: 14px 16px;
+
+  border-radius: 16px;
+
+  margin-bottom: 14px;
+
+  max-width: 75%;
+
+  line-height: 1.5;
+}
+
+.transcript-message.user {
+  background-color: #2563eb;
+
+  color: white;
+
+  margin-left: auto;
+
+  border-bottom-right-radius: 6px;
+}
+
+.transcript-message.ai {
+  background-color: #f1f5f9;
+
+  color: #111827;
+
+  margin-right: auto;
+
+  border-bottom-left-radius: 6px;
+}
+
+.lead-summary {
+  margin: 16px 0;
+
+  line-height: 1.7;
+
+  color: #374151;
+}
+
+.modal-overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0,0,0,0.6);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+  z-index: 1000;
+}
+
+.close-button {
+  background: transparent;
+
+  border: none;
+
+  font-size: 1.5rem;
+
+  cursor: pointer;
+
+  color: #2563eb;
+}
+
+.close-button:hover {
+  color: #111827;
+}
+
+.transcript-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.transcript-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
 }
