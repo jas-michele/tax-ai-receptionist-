@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getEstimate } from "../services/estimateService";
 import { formatCurrency } from "../utils/formatCurrency";
 import { submitIntake } from "../services/intakeService";
-
+import { Link } from "react-router-dom";
 
 export default function IntakePage() {
 
@@ -27,7 +27,7 @@ export default function IntakePage() {
         setSuccessMessage("");
         setErrorMessage("");
 
-        if(
+        if (
             !firstName ||
             !lastName ||
             !phone ||
@@ -54,7 +54,7 @@ export default function IntakePage() {
 
         try {
 
-             await submitIntake({
+            await submitIntake({
                 firstName,
                 lastName,
                 phone,
@@ -89,108 +89,115 @@ export default function IntakePage() {
 
     return (
         <div className="intake-container">
+
+            <nav>
+                <Link to="/">Intake</Link>{" "}
+                <Link to="/chat">Chat</Link>{" "}
+                <Link to="/dashboard">Dashboard</Link>
+            </nav>
+
             <h1>Tax Intake Form</h1>
 
             <div className="intake-card">
-            <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
 
-                <div className="form-group">
-                
-                    <label>First Name</label>
+                    <div className="form-group">
 
-                    <input 
-                        type="text"
-                        value={firstName}
-                        onChange={(e) =>
-                            setFirstName(e.target.value)
-                        }
-                    />
-                </div>
-            
+                        <label>First Name</label>
 
-            <div className="form-group">
-                
-                    <label>Last Name</label>
+                        <input
+                            type="text"
+                            value={firstName}
+                            onChange={(e) =>
+                                setFirstName(e.target.value)
+                            }
+                        />
+                    </div>
 
-                    <input
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => 
-                            setLastName(e.target.value)
-                        }
-                    />    
-                </div>
-                
 
-            <div className="form-group">
+                    <div className="form-group">
 
-                
-                    <label>Phone</label>
+                        <label>Last Name</label>
 
-                    <input
-                        type="text"
-                        value={phone}
-                        onChange={(e) => 
-                            setPhone(e.target.value)
-                        }
-                    />    
-                </div>
+                        <input
+                            type="text"
+                            value={lastName}
+                            onChange={(e) =>
+                                setLastName(e.target.value)
+                            }
+                        />
+                    </div>
 
-        
 
-                <div className="form-group">
+                    <div className="form-group">
 
-                
-                    <label>Email</label>
 
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => 
-                            setEmail(e.target.value)
-                        }
-                    />    
-                </div>
+                        <label>Phone</label>
 
-            
-               
-             <div className="form-group">  
+                        <input
+                            type="text"
+                            value={phone}
+                            onChange={(e) =>
+                                setPhone(e.target.value)
+                            }
+                        />
+                    </div>
 
-                
-                    <label>Income</label>
 
-                    <input
-                        type="number"
-                        value={income}
-                        onChange={(e) =>
-                            setIncome(e.target.value)
-                        }
-                    />
-                </div>
 
-                
+                    <div className="form-group">
 
-            <div className="form-group">
 
-                
-                    <label>Dependents</label>
+                        <label>Email</label>
 
-                    <input
-                        type="number"
-                        value={dependents}
-                        onChange={(e) =>
-                            setDependents(e.target.value)
-                        }
-                    />
-                </div>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) =>
+                                setEmail(e.target.value)
+                            }
+                        />
+                    </div>
 
-                
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Submitting..." : "Submit Intake Form"}
-                </button>
 
-            </form>
+                    <div className="form-group">
+
+
+                        <label>Income</label>
+
+                        <input
+                            type="number"
+                            value={income}
+                            onChange={(e) =>
+                                setIncome(e.target.value)
+                            }
+                        />
+                    </div>
+
+
+
+                    <div className="form-group">
+
+
+                        <label>Dependents</label>
+
+                        <input
+                            type="number"
+                            value={dependents}
+                            onChange={(e) =>
+                                setDependents(e.target.value)
+                            }
+                        />
+                    </div>
+
+
+
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Submitting..." : "Submit Intake Form"}
+                    </button>
+
+                </form>
             </div>
 
             {successMessage && (
