@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { saveIntake, getAllIntakes } from "../services/intakeService";
-import { data } from "react-router-dom";
+
 
 export function createIntake(
     req: Request,
