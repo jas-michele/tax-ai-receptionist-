@@ -30,7 +30,7 @@ export default function DashboardPage() {
         async function fetchIntake() {
             try {
                 const response = await fetch(
-                   `${API_URL}/intake`
+                    `${API_URL}/intake`
                 );
 
                 const data = await response.json();
@@ -94,6 +94,12 @@ export default function DashboardPage() {
     return (
 
         <div className="dashboard-container">
+
+            <nav>
+                <Link to="/">Intake</Link>{" "}
+                <Link to="/chat">Chat</Link>{" "}
+                <Link to="/dashboard">Dashboard</Link>
+            </nav>
 
             <h1 className="dashboard-title">Client Dashboard</h1>
 
@@ -258,21 +264,21 @@ export default function DashboardPage() {
                         className="transcript-modal"
                     >
 
-                    
-                     <div className="transcript-header">
 
-                        <h2>
-                            Conversation Transcript
-                        </h2>
+                        <div className="transcript-header">
 
-                         <button
-                            className="close-button"
-                            onClick={() =>
-                                setselectedConverstaion(null)
-                            }
-                        >
-                            ✕
-                        </button>
+                            <h2>
+                                Conversation Transcript
+                            </h2>
+
+                            <button
+                                className="close-button"
+                                onClick={() =>
+                                    setselectedConverstaion(null)
+                                }
+                            >
+                                ✕
+                            </button>
 
                         </div>
 

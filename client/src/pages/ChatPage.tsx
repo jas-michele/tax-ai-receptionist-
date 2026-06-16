@@ -148,6 +148,11 @@ export default function ChatPage() {
 
         <div className="chat-container">
 
+            <nav>
+                <Link to="/">Intake</Link>{" "}
+                <Link to="/chat">Chat</Link>{" "}
+                <Link to="/dashboard">Dashboard</Link>
+            </nav>
             <h1>AI Receptionist</h1>
 
             <div className="chat-box">
