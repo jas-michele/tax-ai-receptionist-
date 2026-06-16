@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
 type IntakeData = {
     firstName: string;
@@ -12,7 +14,7 @@ export async function submitIntake(
     intakeData: IntakeData
 ) {
     const response = await fetch(
-        "http://localhost:5000/intake",
+        `${API_URL}/intake`,
       {
         method: "POST",
 

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+
 type Intake = {
     id: number;
     status: string,
@@ -26,7 +29,7 @@ export default function DashboardPage() {
         async function fetchIntake() {
             try {
                 const response = await fetch(
-                    "http://localhost:5000/intake"
+                   `${API_URL}/intake`
                 );
 
                 const data = await response.json();
@@ -49,7 +52,7 @@ export default function DashboardPage() {
 
             try {
                 const response = await fetch(
-                    "http://localhost:5000/chat/conversations"
+                    `${API_URL}/chat/conversations`
                 );
 
                 const data = await response.json();

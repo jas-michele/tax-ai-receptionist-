@@ -1,5 +1,7 @@
 import type { RefundResponse } from "../types/RefundResponse";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 type EstimateInput = {
     income: string;
     dependents: string;
@@ -12,7 +14,7 @@ export async function getEstimate({
 }: EstimateInput): Promise<RefundResponse> {
     
     const response = await fetch(
-        "http://localhost:5000/estimate",
+        `${API_URL}/estimate`,
         {
             method: "POST",
 

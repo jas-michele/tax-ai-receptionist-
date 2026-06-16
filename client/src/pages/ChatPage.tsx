@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import type { Message } from "../types/chat.ts"
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
 export default function ChatPage() {
 
@@ -48,7 +50,7 @@ export default function ChatPage() {
             setLoading(true);
 
             const response = await fetch(
-                "http://localhost:5000/chat",
+                `${API_URL}/chat`,
                 {
                     method: "POST",
 
