@@ -2,10 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "main": "dist/server.js",
-  "scripts": {
-    "dev": "ts-node-dev --respawn src/server.ts",
-    "start": "node server.js"
-  },
+ "scripts": {
+  "dev": "ts-node-dev --respawn src/server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js"
+},
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
